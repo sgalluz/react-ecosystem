@@ -1,11 +1,16 @@
 import React from 'react';
-import './App.css';
+import './App.scss';
+import { Todo } from './todos/Todo.model';
+import TodoList from './todos/TodoList';
 
 class App extends React.Component {
-    render(): JSX.Element {
+    render(): React.ReactNode {
+        const todos: Todo[] = [
+            { text: 'Hello' }
+        ];
         return (
-            <div className='App' >
-                <h1>Hello, world!</h1>
+            <div className='app' >
+                <TodoList todos={todos}/>
             </div>
         );
     }
