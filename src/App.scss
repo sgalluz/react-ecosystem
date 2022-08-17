@@ -16,6 +16,10 @@
           }
     }
 
+    h2 {
+        margin: 16px 0 8px;
+    }
+
     button {
         &.button {
             text-align: center;
@@ -25,13 +29,18 @@
             text-overflow: ellipsis;
             padding: 6px;
             border-radius: 4px;
-            opacity: 0.7;
+            opacity: 0.8;
             transition: linear 0.3s all;
             box-shadow: 1px 1px 2px #888888;
 
             &:hover {
                 cursor: pointer;
                 opacity: 1;
+            }
+
+            &[disabled] {
+                opacity: 0.4;
+                cursor: not-allowed;
             }
 
             &.primary {

@@ -1,8 +1,27 @@
-.button-container {
-    button {
-        &.button {
-            &:not(:last-child) {
-                margin-right: 8px;
+.todo-item-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border: 1px solid grey;
+    box-shadow: 1px 1px 1px #888888;
+    padding: 4px 8px;
+    border-radius: 5px;
+    margin: 8px 0;
+
+    &:not(:last-child) {
+        margin-bottom: 0px;
+    }
+
+    h4 {
+        margin: 8px 0;
+    }
+
+    .button-container {
+        button {
+            &.button {
+                &:not(:last-child) {
+                    margin-right: 8px;
+                }
             }
         }
     }

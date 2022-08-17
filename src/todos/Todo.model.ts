@@ -1,3 +1,4 @@
-export interface Todo {
-    text: string
+export class Todo {
+    text: string = '';
+    isCompleted: boolean = false;
 }

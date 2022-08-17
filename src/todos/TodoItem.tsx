@@ -2,19 +2,26 @@ import React from 'react';
 import { Todo } from './Todo.model';
 import './TodoItem.scss';
 
-type TodoItemProps = {
+type Props = {
     todo: Todo;
+    onRemovePressed: (todo: Todo) => void;
 }
 
-class TodoItem extends React.Component<TodoItemProps> {
+class TodoItem extends React.Component<Props> {
     render(): React.ReactNode {
         const { todo } = this.props;
         return (
             <div className='todo-item-container' >
-                <h3>{todo.text}</h3>
+                <h4>{todo.text}</h4>
                 <div className='button-container'>
-                    <button className='button success'>Mark as Completed</button>
-                    <button className='button danger'>Remove</button>
+                    <button
+                        className='button success'
+                        disabled={true}>Mark as Completed
+                    </button>
+                    <button
+                        className='button danger'
+                        onClick={() => this.props.onRemovePressed(todo)}>Remove
+                    </button>
                 </div>
             </div>
         );

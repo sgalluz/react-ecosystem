@@ -3,21 +3,41 @@ import { Todo } from './Todo.model';
 import './TodoList.scss';
 import TodoItem from './TodoItem';
 import TodoForm from './TodoForm';
+import { removeTodo } from './actions';
+import { connect } from 'react-redux';
+import store from '../store';
+import { Dispatch } from '@reduxjs/toolkit';
+import { TodoState } from './slice';
 
-type TodoListProps = {
-    todos: Array<Todo>
+type Props = {
+    todos: Array<Todo>;
+    onRemovePressed: (todo: Todo) => void;
 }
 
-class TodoList extends React.Component<TodoListProps> {
+const mapState = (state: TodoState) => ({ todos: state.todos });
+   
+const mapDispatch = (dispatch: Dispatch) => ({
+    onRemovePressed: (todo: Todo) => dispatch(removeTodo(todo))
+});
+
+const connector = connect(mapState, mapDispatch);
+
+class TodoList extends React.Component<Props> {    
     render(): React.ReactNode {
-        const { todos } = this.props;
+        const { todos } = store.getState().todos;
         return (
             <div className='list-wrapper'>
+                <h2>Todo list</h2>
                 <TodoForm />
-                {(todos).map((todo, i) => <TodoItem key={i} todo={todo}/>)}
+                <h2>To be completed</h2>
+                {todos.map((todo, i) => <TodoItem
+                    key={i}
+                    todo={todo}
+                    onRemovePressed={this.props.onRemovePressed}
+                    />)}
             </div>
         );
     }
 }
 
-export default TodoList;
+export default connector(TodoList);

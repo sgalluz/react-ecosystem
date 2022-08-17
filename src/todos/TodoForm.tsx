@@ -1,35 +1,42 @@
-import React from 'react';
+import React, { useState } from 'react';
+import { useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
+import { createTodo } from './actions';
+import { todosSelector } from './slice';
+import { Todo } from './Todo.model';
 import './TodoForm.scss';
 
-type TodoState = {
-    text: string
-}
+const TodoForm: React.FC = (): JSX.Element => {
+    const { todos } = useSelector(todosSelector);
+    const [todo, setTodo] = useState(new Todo());
+    const dispatch = useDispatch();
 
-class TodoForm extends React.Component<any, TodoState> {
-    constructor(props: any) {
-        super(props);
-        this.state = { text: '' };
-    }
-
-    render(): React.ReactNode {
-        const { text } = this.state;
-        return (
-            <div className='todo-form'>
-                <input
-                    className='todo-text'
-                    type='text'
-                    placeholder='Type your new todo here'
-                    value={text}
-                    onChange={this.updateValue} />
-                <button className='button primary'>Create Todo</button>
-            </div>
-        );
-    }
-
-    private updateValue = (e: React.FormEvent<HTMLInputElement>) => {
+    const updateValue = (e: React.FormEvent<HTMLInputElement>) => {
         const text: string = e?.currentTarget?.value;
-        this.setState({ text });
+        setTodo({ ...todo, text });
     }
+
+    const toggleCreate = () => {
+        const isDuplicateText = todos.some((curr: Todo) => curr.text === todo.text);;
+        if (isDuplicateText) return;
+        dispatch(createTodo(todo));
+        setTodo(new Todo());
+    }
+
+    return (
+        <div className='todo-form'>
+            <input
+                className='todo-text'
+                type='text'
+                placeholder='Type your new todo here'
+                value={todo.text}
+                onChange={updateValue} />
+            <button
+                className='button primary'
+                disabled={!todo.text}
+                onClick={toggleCreate}>Create Todo</button>
+        </div>
+    );
 }
 
 export default TodoForm;
