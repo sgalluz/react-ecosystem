@@ -2,11 +2,12 @@ import React from 'react';
 import { Todo } from './Todo.model';
 import TodoItem from './TodoItem';
 import TodoForm from './TodoForm';
-import { removeTodo } from './actions';
+import { removeTodo } from './Todo.actions';
 import { connect } from 'react-redux';
 import store from '../../store/store';
 import { Dispatch } from '@reduxjs/toolkit';
-import { TodoState } from './slice';
+import { TodoState } from './Todo.slice';
+import './Todos.scss';
 
 type Props = {
     todos: Array<Todo>;
@@ -25,7 +26,7 @@ class TodoList extends React.Component<Props> {
     render(): React.ReactNode {
         const { todos } = store.getState().todos;
         return (
-            <div className='list-wrapper'>
+            <div className='list-wrapper todo-list'>
                 <h2>Todo list</h2>
                 <TodoForm />
                 <h3>To be completed</h3>

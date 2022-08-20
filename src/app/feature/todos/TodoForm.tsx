@@ -2,10 +2,9 @@ import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { useSelector } from 'react-redux';
 import { toast } from 'react-toastify';
-import { createTodo } from './actions';
-import { todosSelector } from './slice';
+import { createTodo } from './Todo.actions';
+import { todosSelector } from './Todo.slice';
 import { Todo } from './Todo.model';
-import './TodoForm.scss';
 
 const TodoForm: React.FC = (): JSX.Element => {
     const { todos } = useSelector(todosSelector);

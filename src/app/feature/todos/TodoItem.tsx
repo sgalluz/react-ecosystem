@@ -1,7 +1,6 @@
 import React, { createRef, RefObject } from 'react';
 import { toast } from 'react-toastify';
 import { Todo } from './Todo.model';
-import './TodoItem.scss';
 
 type Props = {
     todo: Todo;
