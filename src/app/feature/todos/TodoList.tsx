@@ -4,7 +4,7 @@ import TodoItem from './TodoItem';
 import TodoForm from './TodoForm';
 import { removeTodo } from './actions';
 import { connect } from 'react-redux';
-import store from '../store';
+import store from '../../store/store';
 import { Dispatch } from '@reduxjs/toolkit';
 import { TodoState } from './slice';
 
@@ -28,7 +28,7 @@ class TodoList extends React.Component<Props> {
             <div className='list-wrapper'>
                 <h2>Todo list</h2>
                 <TodoForm />
-                <h2>To be completed</h2>
+                <h3>To be completed</h3>
                 {todos.map((todo, i) => <TodoItem
                     key={i}
                     todo={todo}

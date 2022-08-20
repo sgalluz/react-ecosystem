@@ -1,7 +1,7 @@
 import React from 'react';
 import { ToastContainer } from 'react-toastify';
 import './App.scss';
-import TodoList from './todos/TodoList';
+import TodoList from './feature/todos/TodoList';
 
 class App extends React.Component {
     render(): React.ReactNode {

@@ -1,5 +1,5 @@
 import { combineReducers } from '@reduxjs/toolkit';
-import todos from './todos/slice';
+import todos from '../feature/todos/slice';
 
 const reducers = { todos };
 
