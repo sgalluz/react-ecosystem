@@ -10,34 +10,32 @@ import { TodoState } from './Todo.slice';
 import './Todos.scss';
 
 type Props = {
-    todos: Array<Todo>;
-    onRemovePressed: (todo: Todo) => void;
-}
+  todos: Array<Todo>;
+  onRemovePressed: (todo: Todo) => void;
+};
 
 const mapState = (state: TodoState) => ({ todos: state.todos });
-   
+
 const mapDispatch = (dispatch: Dispatch) => ({
-    onRemovePressed: (todo: Todo) => dispatch(removeTodo(todo))
+  onRemovePressed: (todo: Todo) => dispatch(removeTodo(todo))
 });
 
 const connector = connect(mapState, mapDispatch);
 
-class TodoList extends React.Component<Props> {    
-    render(): React.ReactNode {
-        const { todos } = store.getState().todos;
-        return (
-            <div className='list-wrapper todo-list'>
-                <h2>Todo list</h2>
-                <TodoForm />
-                <h3>To be completed</h3>
-                {todos.map((todo, i) => <TodoItem
-                    key={i}
-                    todo={todo}
-                    onRemovePressed={this.props.onRemovePressed}
-                    />)}
-            </div>
-        );
-    }
+class TodoList extends React.Component<Props> {
+  render(): React.ReactNode {
+    const { todos } = store.getState().todos;
+    return (
+      <div className="list-wrapper todo-list">
+        <h2>Todo list</h2>
+        <TodoForm />
+        <h3>To be completed</h3>
+        {todos.map((todo, i) => (
+          <TodoItem key={i} todo={todo} onRemovePressed={this.props.onRemovePressed} />
+        ))}
+      </div>
+    );
+  }
 }
 
 export default connector(TodoList);
