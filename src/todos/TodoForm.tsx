@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { useSelector } from 'react-redux';
+import { toast } from 'react-toastify';
 import { createTodo } from './actions';
 import { todosSelector } from './slice';
 import { Todo } from './Todo.model';
@@ -18,8 +19,12 @@ const TodoForm: React.FC = (): JSX.Element => {
 
     const toggleCreate = () => {
         const isDuplicateText = todos.some((curr: Todo) => curr.text === todo.text);;
-        if (isDuplicateText) return;
+        if (isDuplicateText) {
+            toast.warning('To-Do with same content already exists!');
+            return
+        };
         dispatch(createTodo(todo));
+        toast.success('New To-Do created!');
         setTodo(new Todo());
     }
 
