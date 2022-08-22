@@ -14,7 +14,7 @@ type Props = {
   onRemovePressed: (todo: Todo) => void;
 };
 
-const mapState = (state: TodoState) => ({ todos: state.todos });
+const mapState = (state: TodoState) => ({ todos: state });
 
 const mapDispatch = (dispatch: Dispatch) => ({
   onRemovePressed: (todo: Todo) => dispatch(removeTodo(todo))
@@ -24,7 +24,7 @@ const connector = connect(mapState, mapDispatch);
 
 class TodoList extends React.Component<Props> {
   render(): React.ReactNode {
-    const { todos } = store.getState().todos;
+    const { todos } = store.getState();
     return (
       <div className="list-wrapper todo-list">
         <h2>Todo list</h2>

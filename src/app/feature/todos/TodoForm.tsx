@@ -7,7 +7,7 @@ import { todosSelector } from './Todo.slice';
 import { Todo } from './Todo.model';
 
 const TodoForm: React.FC = (): JSX.Element => {
-  const { todos } = useSelector(todosSelector);
+  const todos = useSelector(todosSelector);
   const [todo, setTodo] = useState(new Todo());
   const dispatch = useDispatch();
 

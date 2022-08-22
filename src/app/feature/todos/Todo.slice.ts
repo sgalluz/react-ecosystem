@@ -2,21 +2,18 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { RootState } from '../../store/store';
 import { Todo } from './Todo.model';
 
-export type TodoState = { todos: Array<Todo> };
+export type TodoState = Array<Todo>;
 
-const initialState: TodoState = { todos: [] };
+const initialState: TodoState = [];
 
 const todoReducers = {
   createTodo: (state: TodoState, action: PayloadAction<Todo>) => {
     const { payload } = action;
-    return { ...state, todos: state.todos.concat(payload) };
+    return state.concat(payload);
   },
   removeTodo: (state: TodoState, action: PayloadAction<Todo>) => {
     const { payload } = action;
-    return {
-      ...state,
-      todos: state.todos.filter((curr: Todo) => curr.text != payload.text)
-    };
+    return state.filter((curr: Todo) => curr.text != payload.text);
   }
 };
 
