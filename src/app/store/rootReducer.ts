@@ -7,10 +7,10 @@ import todos from '../feature/todos/Todo.slice';
 const reducers = { todos };
 
 const persistConfig: PersistConfig<any> = {
-    key: 'root',
-    storage,
-    stateReconciler: autoMergeLevel2
-}
+  key: 'root',
+  storage,
+  stateReconciler: autoMergeLevel2
+};
 
 const rootReducer = combineReducers(reducers);
 const persistedReducer = persistReducer(persistConfig, rootReducer);
