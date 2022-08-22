@@ -2,7 +2,7 @@ import React from 'react';
 import { Todo } from './Todo.model';
 import TodoItem from './TodoItem';
 import TodoForm from './TodoForm';
-import { removeTodo } from './Todo.actions';
+import { markAsCompleted, removeTodo } from './Todo.actions';
 import { connect } from 'react-redux';
 import store from '../../store/store';
 import { Dispatch } from '@reduxjs/toolkit';
@@ -12,12 +12,14 @@ import './Todos.scss';
 type Props = {
   todos: Array<Todo>;
   onRemovePressed: (todo: Todo) => void;
+  onCompletePressed: (todo: Todo) => void;
 };
 
 const mapState = (state: TodoState) => ({ todos: state });
 
 const mapDispatch = (dispatch: Dispatch) => ({
-  onRemovePressed: (todo: Todo) => dispatch(removeTodo(todo))
+  onRemovePressed: (todo: Todo) => dispatch(removeTodo(todo)),
+  onCompletePressed: (todo: Todo) => dispatch(markAsCompleted({ ...todo, isCompleted: true }))
 });
 
 const connector = connect(mapState, mapDispatch);
@@ -31,7 +33,7 @@ class TodoList extends React.Component<Props> {
         <TodoForm />
         <h3>To be completed</h3>
         {todos.map((todo: Todo, i: number) => (
-          <TodoItem key={i} todo={todo} onRemovePressed={this.props.onRemovePressed} />
+          <TodoItem key={i} todo={todo} onRemovePressed={this.props.onRemovePressed} onCompletePressed={this.props.onCompletePressed}/>
         ))}
       </div>
     );

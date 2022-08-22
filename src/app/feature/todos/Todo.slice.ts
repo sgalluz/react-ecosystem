@@ -14,6 +14,10 @@ const reducers = {
   removeTodo: (state: TodoState, action: PayloadAction<Todo>) => {
     const { payload } = action;
     return state.filter((todo: Todo) => todo.text != payload.text);
+  },
+  markAsCompleted: (state: TodoState, action: PayloadAction<Todo>) => {
+    const { payload } = action;
+    return state.map((todo: Todo) => todo.text === payload.text ? payload : todo);
   }
 };
 

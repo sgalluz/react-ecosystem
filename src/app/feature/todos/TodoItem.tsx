@@ -5,6 +5,7 @@ import { Todo } from './Todo.model';
 type Props = {
   todo: Todo;
   onRemovePressed: (todo: Todo) => void;
+  onCompletePressed: (todo: Todo) => void;
 };
 
 const TodoItem: React.FC<Props> = (props: Props): JSX.Element => {
@@ -21,13 +22,20 @@ const TodoItem: React.FC<Props> = (props: Props): JSX.Element => {
     toast.success('Todo removed!');
   };
 
+  const markTodoAsCompleted = () => {
+    props.onCompletePressed(todo);
+    toast.success('Todo completed!');
+  }
+
   return (
     <div className="todo-item-container" ref={itemRef}>
       <h4>{todo.text}</h4>
       <div className="button-container">
-        <button className="button success" disabled={true}>
-          Mark as Completed
-        </button>
+        {todo.isCompleted ? null : (
+          <button className="button success" onClick={markTodoAsCompleted}>
+            Mark as Completed
+          </button>
+        )}
         <button className="button danger" onClick={removeTodo}>
           Remove
         </button>
