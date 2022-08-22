@@ -3,6 +3,8 @@
 $yellow: hsl(54deg 99% 72%);
 
 .app {
+    display: flex;
+    justify-content: center;
     margin: 1rem;
     font-family: Arial, Helvetica, sans-serif;
     color: #222222;

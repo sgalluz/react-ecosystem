@@ -2,6 +2,8 @@
 @import '../../../assets/styles/animations.scss';
 
 .todo-list {
+    min-width: 500px;
+
     .todo-form {
         width: 100%;
     

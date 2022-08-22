@@ -14,7 +14,10 @@ const TodoItem: React.FC<Props> = (props: Props): JSX.Element => {
   const removeTodo = () => {
     // FIXME remove dirty hack
     itemRef.current?.classList.add('removing');
-    setTimeout(() => props.onRemovePressed(todo), 500);
+    setTimeout(() => {
+      props.onRemovePressed(todo);
+      itemRef.current?.classList.remove('removing');
+    }, 500);
     toast.success('Todo removed!');
   };
 
