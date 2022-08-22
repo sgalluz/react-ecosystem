@@ -25,7 +25,7 @@ const TodoItem: React.FC<Props> = (props: Props): JSX.Element => {
   const markTodoAsCompleted = () => {
     props.onCompletePressed(todo);
     toast.success('Todo completed!');
-  }
+  };
 
   return (
     <div className="todo-item-container" ref={itemRef}>

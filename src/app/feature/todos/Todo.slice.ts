@@ -17,7 +17,7 @@ const reducers = {
   },
   markAsCompleted: (state: TodoState, action: PayloadAction<Todo>) => {
     const { payload } = action;
-    return state.map((todo: Todo) => todo.text === payload.text ? payload : todo);
+    return state.map((todo: Todo) => (todo.text === payload.text ? payload : todo));
   }
 };
 

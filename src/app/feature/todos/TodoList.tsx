@@ -33,7 +33,12 @@ class TodoList extends React.Component<Props> {
         <TodoForm />
         <h3>To be completed</h3>
         {todos.map((todo: Todo, i: number) => (
-          <TodoItem key={i} todo={todo} onRemovePressed={this.props.onRemovePressed} onCompletePressed={this.props.onCompletePressed}/>
+          <TodoItem
+            key={i}
+            todo={todo}
+            onRemovePressed={this.props.onRemovePressed}
+            onCompletePressed={this.props.onCompletePressed}
+          />
         ))}
       </div>
     );
