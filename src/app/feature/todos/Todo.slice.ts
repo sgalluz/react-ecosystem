@@ -6,21 +6,21 @@ export type TodoState = Array<Todo>;
 
 const initialState: TodoState = [];
 
-const todoReducers = {
+const reducers = {
   createTodo: (state: TodoState, action: PayloadAction<Todo>) => {
     const { payload } = action;
     return state.concat(payload);
   },
   removeTodo: (state: TodoState, action: PayloadAction<Todo>) => {
     const { payload } = action;
-    return state.filter((curr: Todo) => curr.text != payload.text);
+    return state.filter((todo: Todo) => todo.text != payload.text);
   }
 };
 
 const slice = createSlice({
   name: 'todos',
   initialState,
-  reducers: todoReducers
+  reducers
 });
 
 export default slice.reducer;
