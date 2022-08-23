@@ -1,4 +1,4 @@
-@import '../../../assets/styles/colors.scss';
+@import 'colors';
 
 .loader-container {
   display: flex;
@@ -11,7 +11,7 @@
     position: relative;
     width: 80px;
     height: 80px;
-  
+
     div {
       position: absolute;
       top: 33px;
@@ -20,22 +20,22 @@
       border-radius: 50%;
       background: $yellow;
       animation-timing-function: cubic-bezier(0, 1, 1, 0);
-  
+
       &:nth-child(1) {
         left: 8px;
         animation: spinner-ball-in 0.6s infinite;
       }
-  
+
       &:nth-child(2) {
         left: 8px;
         animation: spinner-ball-mid 0.6s infinite;
       }
-  
+
       &:nth-child(3) {
         left: 32px;
-         animation: spinner-ball-mid 0.6s infinite;
+        animation: spinner-ball-mid 0.6s infinite;
       }
-  
+
       &:nth-child(4) {
         left: 56px;
         animation: spinner-ball-out 0.6s infinite;
@@ -55,7 +55,7 @@
 
 @keyframes spinner-ball-mid {
   0% {
-   transform: translate(0, 0);
+    transform: translate(0, 0);
   }
   100% {
     transform: translate(24px, 0);
