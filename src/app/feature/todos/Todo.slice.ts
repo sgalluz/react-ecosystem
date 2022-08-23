@@ -2,23 +2,35 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { RootState } from '../../store/store';
 import { Todo } from './Todo.model';
 
-export type TodoState = Array<Todo>;
+export type TodoState = {
+  items: Array<Todo>;
+  isLoading: boolean;
+};
 
-const initialState: TodoState = [];
+const initialState: TodoState = { items: [], isLoading: false };
 
 const reducers = {
   createTodo: (state: TodoState, action: PayloadAction<Todo>) => {
     const { payload } = action;
-    return state.concat(payload);
+    return { ...state, items: state.items.concat(payload) };
   },
   removeTodo: (state: TodoState, action: PayloadAction<Todo>) => {
     const { payload } = action;
-    return state.filter((todo: Todo) => todo.text != payload.text);
+    return { ...state, items: state.items.filter((todo: Todo) => todo.text != payload.text) };
   },
   markAsCompleted: (state: TodoState, action: PayloadAction<Todo>) => {
     const { payload } = action;
-    return state.map((todo: Todo) => (todo.text === payload.text ? payload : todo));
-  }
+    return {
+      ...state,
+      items: state.items.map((todo: Todo) => (todo.text === payload.text ? payload : todo))
+    };
+  },
+  loadTodosInProgress: (state: TodoState) => ({ ...state, isLoading: true }),
+  loadTodosSuccess: (_: TodoState, action: PayloadAction<Todo[]>) => {
+    const { payload } = action;
+    return { items: payload, isLoading: false };
+  },
+  loadTodosFailure: (state: TodoState) => ({ ...state, isLoading: false })
 };
 
 const slice = createSlice({
@@ -29,4 +41,6 @@ const slice = createSlice({
 
 export default slice.reducer;
 
-export const todosSelector = (state: RootState) => state.todos;
+export const todosSelector = (state: RootState) => state.todos.items;
+
+export const todosLoadingSelector = (state: RootState) => state.todos.isLoading;

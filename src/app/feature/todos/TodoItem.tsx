@@ -1,6 +1,7 @@
 import React, { createRef, RefObject } from 'react';
 import { toast } from 'react-toastify';
 import { Todo } from './Todo.model';
+import { FaCheck, FaRegCheckCircle, FaRegCircle, FaTimes } from "react-icons/fa";
 
 type Props = {
   todo: Todo;
@@ -29,15 +30,20 @@ const TodoItem: React.FC<Props> = (props: Props): JSX.Element => {
 
   return (
     <div className="todo-item-container" ref={itemRef}>
-      <h4>{todo.text}</h4>
+      <div className='todo-item-text'>
+        {todo.isCompleted ? <FaRegCheckCircle className='completed'/> : <FaRegCircle /> }
+        <h4>{todo.text}</h4>
+      </div>
       <div className="button-container">
         {todo.isCompleted ? null : (
           <button className="button success" onClick={markTodoAsCompleted}>
-            Mark as Completed
+            Complete
+            <FaCheck />
           </button>
         )}
         <button className="button danger" onClick={removeTodo}>
           Remove
+          <FaTimes />
         </button>
       </div>
     </div>

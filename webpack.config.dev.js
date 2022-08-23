@@ -2,7 +2,8 @@ const path = require('path');
 
 module.exports = {
   entry: './src/index.tsx',
-  mode: 'production',
+  mode: 'development',
+  devtool: 'inline-source-map',
   module: {
     rules: [
       {
@@ -40,5 +41,16 @@ module.exports = {
     publicPath: '/dist/',
     filename: 'bundle.js',
     clean: true
+  },
+  devServer: {
+    static: './public',
+    port: 3000,
+    hot: true,
+    proxy: {
+      '/todos': {
+        target: 'http://localhost:8080',
+        changeOrigin: true
+      }
+    }
   }
 };

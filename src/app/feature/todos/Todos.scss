@@ -1,14 +1,39 @@
 // FIXME set assets/styles as base dir
 @import '../../../assets/styles/animations.scss';
+@import '../../../assets/styles/colors.scss';
 
 .todo-list {
     min-width: 500px;
+    text-align: center;
+
+    header {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        svg {
+            margin-right: 8px;
+            font-size: 21px;
+        }
+    }
+
+    h2, h3 {
+        animation: fade-in 1s ease 0s 1 normal forwards;
+    }
 
     .todo-form {
-        width: 100%;
+        border: 1px solid #f9f9f9;
+        box-shadow: 1px 1px 4px #888888;
+        padding: 16px 8px;
+        border-radius: 4px;
+        display: flex;
+        width: inherit;
+        justify-content: space-between;
+        animation: from-left 0.5s ease 0s 1 normal forwards;
     
         input {
-            width: inherit;
+            min-width: 200px;
+            max-width: 300px;
             margin-right: 8px;
         }
     }
@@ -32,19 +57,61 @@
         &:not(:last-child) {
             margin-bottom: 0px;
         }
-    
-        h4 {
-            margin: 8px 0;
+
+        .todo-item-text {
+            display: flex;
+            align-items: center;
+
+            svg {
+                margin-right: 4px;
+
+                &.completed {
+                    color: $success;
+                }
+            }
+
+            h4 {
+                margin: 8px 0 6px;
+            }    
         }
     
         .button-container {
+            display: flex;
+
             button {
+                display: flex;
+                align-items: center;
+
                 &.button {
                     &:not(:last-child) {
                         margin-right: 8px;
+                    }
+                    svg {
+                        margin-left: 4px;
                     }
                 }
             }
         }
     }   
+}
+
+@keyframes from-left {
+	0% {
+		opacity: 0;
+		transform: translateX(-25%);
+	}
+
+	100% {
+		opacity: 1;
+		transform: translateX(0);
+	}
+}
+
+@keyframes fade-in {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
 }
