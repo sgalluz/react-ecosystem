@@ -3,18 +3,17 @@ import { Todo } from './Todo.model';
 import TodoItem from './TodoItem';
 import TodoForm from './TodoForm';
 import Loader from '../../components/loader/Loader';
-import { markAsCompleted, removeTodo } from './Todo.actions';
 import { connect } from 'react-redux';
 import { todosLoadingSelector, todosSelector, TodoState } from './Todo.slice';
 import { useSelector } from 'react-redux';
 import './Todos.scss';
-import { loadTodos } from './Todo.thunks';
+import { loadTodos, removeTodoRequest, markTodoAsCompleteRequest } from './Todo.thunks';
 import { FaTasks } from 'react-icons/fa';
 
 type Props = {
   todos: Array<Todo>;
-  onRemovePressed: (todo: Todo) => void;
-  onCompletePressed: (todo: Todo) => void;
+  onRemovePressed: (id: string) => void;
+  onCompletePressed: (id: string) => void;
   isLoading: boolean;
   startLoadingTodos: () => void;
 };
@@ -24,7 +23,7 @@ const TodoList: React.FC<Props> = (props: Props): JSX.Element => {
   const isLoading: boolean = useSelector(todosLoadingSelector);
 
   useEffect(() => {
-    props.startLoadingTodos()
+    props.startLoadingTodos();
   }, []);
 
   const loadingMessage = <Loader />;
@@ -58,11 +57,11 @@ const mapState = (state: TodoState) => ({
   todos: state.items,
   isLoading: state.isLoading
 });
-
+  
 const mapDispatch = (dispatch: any) => ({
   startLoadingTodos: () => dispatch(loadTodos()),
-  onRemovePressed: (todo: Todo) => dispatch(removeTodo(todo)),
-  onCompletePressed: (todo: Todo) => dispatch(markAsCompleted({ ...todo, isCompleted: true }))
+  onRemovePressed: (id: string) => dispatch(removeTodoRequest(id)),
+  onCompletePressed: (id: string) => dispatch(markTodoAsCompleteRequest(id))
 });
 
 const connector = connect(mapState, mapDispatch);

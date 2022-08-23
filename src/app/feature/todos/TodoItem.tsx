@@ -1,12 +1,12 @@
 import React, { createRef, RefObject } from 'react';
 import { toast } from 'react-toastify';
 import { Todo } from './Todo.model';
-import { FaCheck, FaRegCheckCircle, FaRegCircle, FaTimes } from "react-icons/fa";
+import { FaCheck, FaRegCheckCircle, FaRegCircle, FaTimes } from 'react-icons/fa';
 
 type Props = {
   todo: Todo;
-  onRemovePressed: (todo: Todo) => void;
-  onCompletePressed: (todo: Todo) => void;
+  onRemovePressed: (id: string) => void;
+  onCompletePressed: (id: string) => void;
 };
 
 const TodoItem: React.FC<Props> = (props: Props): JSX.Element => {
@@ -17,21 +17,21 @@ const TodoItem: React.FC<Props> = (props: Props): JSX.Element => {
     // FIXME remove dirty hack
     itemRef.current?.classList.add('removing');
     setTimeout(() => {
-      props.onRemovePressed(todo);
+      props.onRemovePressed(todo.id);
       itemRef.current?.classList.remove('removing');
     }, 500);
     toast.success('Todo removed!');
   };
 
   const markTodoAsCompleted = () => {
-    props.onCompletePressed(todo);
+    props.onCompletePressed(todo.id);
     toast.success('Todo completed!');
   };
 
   return (
     <div className="todo-item-container" ref={itemRef}>
-      <div className='todo-item-text'>
-        {todo.isCompleted ? <FaRegCheckCircle className='completed'/> : <FaRegCircle /> }
+      <div className="todo-item-text">
+        {todo.isCompleted ? <FaRegCheckCircle className="completed" /> : <FaRegCircle />}
         <h4>{todo.text}</h4>
       </div>
       <div className="button-container">

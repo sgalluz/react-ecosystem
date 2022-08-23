@@ -16,13 +16,13 @@ const reducers = {
   },
   removeTodo: (state: TodoState, action: PayloadAction<Todo>) => {
     const { payload } = action;
-    return { ...state, items: state.items.filter((todo: Todo) => todo.text != payload.text) };
+    return { ...state, items: state.items.filter((todo: Todo) => todo.id != payload.id) };
   },
   markAsCompleted: (state: TodoState, action: PayloadAction<Todo>) => {
     const { payload } = action;
     return {
       ...state,
-      items: state.items.map((todo: Todo) => (todo.text === payload.text ? payload : todo))
+      items: state.items.map((todo: Todo) => (todo.id === payload.id ? payload : todo))
     };
   },
   loadTodosInProgress: (state: TodoState) => ({ ...state, isLoading: true }),
