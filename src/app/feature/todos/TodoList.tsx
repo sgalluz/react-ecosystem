@@ -4,14 +4,16 @@ import TodoItem from './TodoItem';
 import TodoForm from './TodoForm';
 import Loader from '../../components/loader/Loader';
 import { connect } from 'react-redux';
-import { todosLoadingSelector, todosSelector, TodoState } from './Todo.slice';
-import { useSelector } from 'react-redux';
+import { getTodosLoading, getTodos, getCompletedTodos, getIncompleteTodos } from './Todo.selectors';
 import './Todos.scss';
 import { loadTodos, removeTodoRequest, markTodoAsCompleteRequest } from './Todo.thunks';
 import { FaTasks } from 'react-icons/fa';
+import { TodoState } from './Todo.slice';
+import { useSelector } from 'react-redux';
 
 type Props = {
-  todos: Array<Todo>;
+  completedTodos: Array<Todo>;
+  incompleteTodos: Array<Todo>;
   onRemovePressed: (id: string) => void;
   onCompletePressed: (id: string) => void;
   isLoading: boolean;
@@ -19,9 +21,6 @@ type Props = {
 };
 
 const TodoList: React.FC<Props> = (props: Props): JSX.Element => {
-  const todos: Todo[] = useSelector(todosSelector);
-  const isLoading: boolean = useSelector(todosLoadingSelector);
-
   useEffect(() => {
     props.startLoadingTodos();
   }, []);
@@ -29,9 +28,18 @@ const TodoList: React.FC<Props> = (props: Props): JSX.Element => {
   const loadingMessage = <Loader />;
   const todoListContent = (
     <>
-      <TodoForm todos={todos} />
+      <TodoForm todos={props.incompleteTodos} />
       <h3>To be completed</h3>
-      {todos.map((todo: Todo, i: number) => (
+      {props.incompleteTodos.map((todo: Todo, i: number) => (
+        <TodoItem
+          key={i}
+          todo={todo}
+          onRemovePressed={props.onRemovePressed}
+          onCompletePressed={props.onCompletePressed}
+        />
+      ))}
+      <h3>Completed</h3>
+      {props.completedTodos.map((todo: Todo, i: number) => (
         <TodoItem
           key={i}
           todo={todo}
@@ -48,16 +56,17 @@ const TodoList: React.FC<Props> = (props: Props): JSX.Element => {
         <FaTasks />
         <h2>Todo list</h2>
       </header>
-      {isLoading ? loadingMessage : todoListContent}
+      {props.isLoading ? loadingMessage : todoListContent}
     </div>
   );
 };
 
 const mapState = (state: TodoState) => ({
-  todos: state.items,
-  isLoading: state.isLoading
+  isLoading: getTodosLoading(state),
+  completedTodos: getCompletedTodos(state),
+  incompleteTodos: getIncompleteTodos(state)
 });
-  
+
 const mapDispatch = (dispatch: any) => ({
   startLoadingTodos: () => dispatch(loadTodos()),
   onRemovePressed: (id: string) => dispatch(removeTodoRequest(id)),

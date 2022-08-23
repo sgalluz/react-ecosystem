@@ -18,7 +18,7 @@
     }
 
     h2, h3 {
-        animation: fade-in 1s ease 0s 1 normal forwards;
+        animation: from-right 1s ease 0s 1 normal forwards;
     }
 
     .todo-form {
@@ -99,6 +99,18 @@
 	0% {
 		opacity: 0;
 		transform: translateX(-25%);
+	}
+
+	100% {
+		opacity: 1;
+		transform: translateX(0);
+	}
+}
+
+@keyframes from-right {
+	0% {
+		opacity: 0;
+		transform: translateX(25%);
 	}
 
 	100% {

@@ -1,5 +1,4 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { RootState } from '../../store/store';
 import { Todo } from './Todo.model';
 
 export type TodoState = {
@@ -40,7 +39,3 @@ const slice = createSlice({
 });
 
 export default slice.reducer;
-
-export const todosSelector = (state: RootState) => state.todos.items;
-
-export const todosLoadingSelector = (state: RootState) => state.todos.isLoading;
