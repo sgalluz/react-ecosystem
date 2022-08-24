@@ -1,12 +1,20 @@
 import React from 'react';
 import { ToastContainer } from 'react-toastify';
-import './App.scss';
+import styled from 'styled-components';
 import TodoList from './feature/todos/TodoList';
+import './App.scss';
+
+const AppContainer = styled.div`
+  display: flex;
+  justify-content: center;
+  font-family: Arial, Helvetica, sans-serif;
+  color: #222222;
+`;
 
 class App extends React.Component {
   render(): React.ReactNode {
     return (
-      <div className="app">
+      <AppContainer>
         <ToastContainer
           position="top-right"
           autoClose={2000}
@@ -17,7 +25,7 @@ class App extends React.Component {
           draggable
         />
         <TodoList />
-      </div>
+      </AppContainer>
     );
   }
 }

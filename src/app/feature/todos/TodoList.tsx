@@ -2,14 +2,35 @@ import React, { useEffect } from 'react';
 import { Todo } from './Todo.model';
 import TodoItem from './TodoItem';
 import TodoForm from './TodoForm';
-import Loader from '../../components/loader/Loader';
+import Loader from '../../components/Loader';
 import { connect } from 'react-redux';
-import { getTodosLoading, getTodos, getCompletedTodos, getIncompleteTodos } from './Todo.selectors';
-import './Todos.scss';
+import { getTodosLoading, getCompletedTodos, getIncompleteTodos } from './Todo.selectors';
 import { loadTodos, removeTodoRequest, markTodoAsCompleteRequest } from './Todo.thunks';
 import { FaTasks } from 'react-icons/fa';
 import { TodoState } from './Todo.slice';
-import { useSelector } from 'react-redux';
+import styled from 'styled-components';
+
+const ListWrapper = styled.div`
+  min-width: 500px;
+  text-align: center;
+
+  header {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    svg {
+      margin-right: 8px;
+      font-size: 21px;
+      animation: ${({ theme }) => theme.animations.fadeIn};
+    }
+  }
+
+  h2,
+  h3 {
+    animation: ${({ theme }) => theme.animations.fromRight};
+  }
+`;
 
 type Props = {
   completedTodos: Array<Todo>;
@@ -51,13 +72,13 @@ const TodoList: React.FC<Props> = (props: Props): JSX.Element => {
   );
 
   return (
-    <div className="list-wrapper todo-list">
+    <ListWrapper>
       <header>
         <FaTasks />
         <h2>Todo list</h2>
       </header>
       {props.isLoading ? loadingMessage : todoListContent}
-    </div>
+    </ListWrapper>
   );
 };
 
