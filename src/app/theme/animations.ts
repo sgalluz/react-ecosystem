@@ -3,11 +3,13 @@ import { css, keyframes } from 'styled-components';
 const appear = keyframes`
   0% {
     opacity: 0;
-    transform: translateY(50px);
+    // transform: translateY(50px);
+    height: 0;
   }
   100% {
     opacity: 1;
-    transform: translateY(0);
+    height: auto;
+    // transform: translateY(0);
   }
 `;
 

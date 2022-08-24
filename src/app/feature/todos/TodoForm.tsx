@@ -1,10 +1,13 @@
+import { Action } from '@reduxjs/toolkit';
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { toast } from 'react-toastify';
+import { ThunkDispatch } from 'redux-thunk';
 import styled from 'styled-components';
 import { PrimaryButton } from '../../components/Buttons';
 import { InputText } from '../../components/InputText';
 import { Todo } from './Todo.model';
+import { TodoState } from './Todo.slice';
 import { addTodoRequest } from './Todo.thunks';
 
 const FormContainer = styled.div`
@@ -30,8 +33,7 @@ type Props = {
 
 const TodoForm: React.FC<Props> = (props: Props): JSX.Element => {
   const [text, setText] = useState('');
-  // FIXME typings
-  const dispatch: any = useDispatch();
+  const dispatch: ThunkDispatch<TodoState, void, Action> = useDispatch();
 
   const updateValue = (e: React.FormEvent<HTMLInputElement>) => {
     setText(e?.currentTarget?.value);

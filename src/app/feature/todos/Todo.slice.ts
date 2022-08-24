@@ -1,4 +1,4 @@
-import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { createSlice, PayloadAction, ValidateSliceCaseReducers } from '@reduxjs/toolkit';
 import { Todo } from './Todo.model';
 
 export type TodoState = {
@@ -8,7 +8,7 @@ export type TodoState = {
 
 const initialState: TodoState = { items: [], isLoading: false };
 
-const reducers = {
+const reducers: ValidateSliceCaseReducers<TodoState, any> = {
   createTodo: (state: TodoState, action: PayloadAction<Todo>) => {
     const { payload } = action;
     return { ...state, items: state.items.concat(payload) };

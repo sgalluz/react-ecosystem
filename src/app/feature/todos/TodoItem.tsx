@@ -17,10 +17,6 @@ const ItemContainer = styled.div`
   box-shadow: 1px 1px 4px #888888;
   animation: ${({ theme }) => theme.animations.appear};
 
-  &.removing {
-    animation: ${({ theme }) => theme.animations.disappear};
-  }
-
   &:not(:last-child) {
     margin-bottom: 0px;
   }
@@ -37,19 +33,21 @@ const Item = styled.div`
       color: ${({ theme }) => theme.colors.success};
     }
   }
+`;
 
-  .todo-item-content {
-    h4 {
-      margin: 0;
-    }
+const ItemContent = styled.div`
+  text-align: left;
 
-    p {
-      display: flex;
-      justify-content: start;
-      margin: 0;
-      font-size: 12px;
-      color: #666666;
-    }
+  h4 {
+    margin: 0;
+  }
+
+  p {
+    display: flex;
+    justify-content: start;
+    margin: 0;
+    font-size: 12px;
+    color: #666666;
   }
 `;
 
@@ -63,31 +61,21 @@ const TodoItem: React.FC<Props> = (props: Props): JSX.Element => {
   const { todo } = props;
   const itemRef: RefObject<HTMLDivElement> = createRef();
 
-  const removeTodo = () => {
-    // FIXME remove dirty hack
-    itemRef.current?.classList.add('removing');
-    setTimeout(() => {
-      props.onRemovePressed(todo.id);
-      itemRef.current?.classList.remove('removing');
-    }, 500);
-  };
-
-  const markTodoAsCompleted = () => {
-    props.onCompletePressed(todo.id);
-  };
+  const removeTodo = () => props.onRemovePressed(todo.id);
+  const markTodoAsCompleted = () => props.onCompletePressed(todo.id);
 
   return (
     <ItemContainer ref={itemRef}>
       <Item>
         {todo.isCompleted ? <FaRegCheckCircle className="completed" /> : <FaRegCircle />}
-        <div className="todo-item-content">
+        <ItemContent>
           <h4>{todo.text}</h4>
           {todo.createdAt && (
             <p>
               Created at:&nbsp;<b>{new Date(todo.createdAt).toLocaleDateString()}</b>
             </p>
           )}
-        </div>
+        </ItemContent>
       </Item>
       <ButtonContainer>
         {todo.isCompleted ? null : (

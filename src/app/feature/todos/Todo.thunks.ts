@@ -1,4 +1,7 @@
+import { Action } from '@reduxjs/toolkit';
 import { toast } from 'react-toastify';
+import { ThunkDispatch } from 'redux-thunk';
+import { HttpClient } from '../../services/HttpClient';
 import {
   createTodo,
   loadTodosFailure,
@@ -8,12 +11,14 @@ import {
   removeTodo
 } from './Todo.actions';
 import { Todo } from './Todo.model';
+import { TodoState } from './Todo.slice';
 
-export const loadTodos = () => async (dispatch: any) => {
+const httpClient: HttpClient = new HttpClient();
+
+export const loadTodos = () => async (dispatch: ThunkDispatch<TodoState, void, Action>) => {
   try {
     dispatch(loadTodosInProgress());
-    const response = await fetch('/todos');
-    const todos: Todo[] = await response.json();
+    const todos: Todo[] = await httpClient.get('/todos');
     dispatch(loadTodosSuccess(todos));
   } catch (error) {
     dispatch(loadTodosFailure());
@@ -21,46 +26,35 @@ export const loadTodos = () => async (dispatch: any) => {
   }
 };
 
-export const addTodoRequest = (text: string) => async (dispatch: any) => {
-  try {
-    const body = JSON.stringify({ text });
-    const response = await fetch('/todos', {
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      method: 'POST',
-      body
-    });
-    const addedTodo: Todo = await response.json();
-    dispatch(createTodo(addedTodo));
-    toast.success('New todo created!');
-  } catch (error) {
-    toast.error('Unable to create new todo');
-  }
-};
+export const addTodoRequest =
+  (text: string) => async (dispatch: ThunkDispatch<TodoState, void, Action>) => {
+    try {
+      const addedTodo: Todo = await httpClient.post('/todos', { text });
+      dispatch(createTodo(addedTodo));
+      toast.success('New todo created!');
+    } catch (error) {
+      toast.error('Unable to create new todo');
+    }
+  };
 
-export const removeTodoRequest = (id: string) => async (dispatch: any) => {
-  try {
-    const response = await fetch(`/todos/${id}`, {
-      method: 'DELETE'
-    });
-    const removedTodo: Todo = await response.json();
-    dispatch(removeTodo(removedTodo));
-    toast.success('Todo removed!');
-  } catch (error) {
-    toast.error('Unable to remove todo');
-  }
-};
+export const removeTodoRequest =
+  (id: string) => async (dispatch: ThunkDispatch<TodoState, void, Action>) => {
+    try {
+      const removedTodo: Todo = await httpClient.delete(`/todos/${id}`);
+      dispatch(removeTodo(removedTodo));
+      toast.success('Todo removed!');
+    } catch (error) {
+      toast.error('Unable to remove todo');
+    }
+  };
 
-export const markTodoAsCompleteRequest = (id: string) => async (dispatch: any) => {
-  try {
-    const response = await fetch(`/todos/${id}/completed`, {
-      method: 'POST'
-    });
-    const updatedTodo: Todo = await response.json();
-    dispatch(markAsCompleted(updatedTodo));
-    toast.success('Todo completed!');
-  } catch (error) {
-    toast.error('Unable to remove todo');
-  }
-};
+export const markTodoAsCompleteRequest =
+  (id: string) => async (dispatch: ThunkDispatch<TodoState, void, Action>) => {
+    try {
+      const updatedTodo: Todo = await httpClient.post(`/todos/${id}/completed`);
+      dispatch(markAsCompleted(updatedTodo));
+      toast.success('Todo completed!');
+    } catch (error) {
+      toast.error('Unable to remove todo');
+    }
+  };

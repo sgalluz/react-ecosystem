@@ -9,6 +9,9 @@ import { loadTodos, removeTodoRequest, markTodoAsCompleteRequest } from './Todo.
 import { FaTasks } from 'react-icons/fa';
 import { TodoState } from './Todo.slice';
 import styled from 'styled-components';
+import { TransitionGroup, CSSTransition } from 'react-transition-group';
+import { ThunkDispatch } from 'redux-thunk';
+import { Action } from '@reduxjs/toolkit';
 
 const ListWrapper = styled.div`
   min-width: 500px;
@@ -30,6 +33,14 @@ const ListWrapper = styled.div`
   h3 {
     animation: ${({ theme }) => theme.animations.fromRight};
   }
+
+  .entering {
+    animation: ${({ theme }) => theme.animations.appear};
+  }
+
+  .removing {
+    animation: ${({ theme }) => theme.animations.disappear};
+  }
 `;
 
 type ItemListProps = {
@@ -42,14 +53,24 @@ type ItemListProps = {
 const ItemList: React.FC<ItemListProps> = (props: ItemListProps): JSX.Element => (
   <>
     <h3>{props.label}</h3>
-    {props.todos.map((todo: Todo, i: number) => (
-      <TodoItem
-        key={i}
-        todo={todo}
-        onRemovePressed={props.onRemovePressed}
-        onCompletePressed={props.onCompletePressed}
-      />
-    ))}
+    <TransitionGroup>
+      {props.todos.map((todo: Todo, i: number) => (
+        <CSSTransition
+          key={i}
+          classNames={{
+            enterActive: 'entering',
+            exitActive: 'removing'
+          }}
+          timeout={500}
+        >
+          <TodoItem
+            todo={todo}
+            onRemovePressed={props.onRemovePressed}
+            onCompletePressed={props.onCompletePressed}
+          />
+        </CSSTransition>
+      ))}
+    </TransitionGroup>
   </>
 );
 
@@ -103,8 +124,7 @@ const mapState = (state: TodoState) => ({
   incompleteTodos: getIncompleteTodos(state)
 });
 
-// FIXME typing dispatch
-const mapDispatch = (dispatch: any) => ({
+const mapDispatch = (dispatch: ThunkDispatch<TodoState, void, Action>) => ({
   startLoadingTodos: () => dispatch(loadTodos()),
   onRemovePressed: (id: string) => dispatch(removeTodoRequest(id)),
   onCompletePressed: (id: string) => dispatch(markTodoAsCompleteRequest(id))
