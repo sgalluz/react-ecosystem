@@ -1,7 +1,7 @@
 import React from 'react';
 import { ToastContainer } from 'react-toastify';
 import styled from 'styled-components';
-import TodoList from './feature/todos/TodoList';
+import TodoListWrapper from './feature/todos/TodoListWrapper';
 import './App.scss';
 
 const AppContainer = styled.div`
@@ -24,7 +24,7 @@ class App extends React.Component {
           rtl={false}
           draggable
         />
-        <TodoList />
+        <TodoListWrapper />
       </AppContainer>
     );
   }
