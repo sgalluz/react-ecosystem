@@ -12,7 +12,7 @@ import { Todo } from './Todo.model';
 export const loadTodos = () => async (dispatch: any) => {
   try {
     dispatch(loadTodosInProgress());
-    const response = await fetch('/todos-delay');
+    const response = await fetch('/todos');
     const todos: Todo[] = await response.json();
     dispatch(loadTodosSuccess(todos));
   } catch (error) {
