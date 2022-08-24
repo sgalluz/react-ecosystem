@@ -32,12 +32,33 @@ const ListWrapper = styled.div`
   }
 `;
 
+type ItemListProps = {
+  todos: Todo[];
+  label: string;
+  onRemovePressed: (id: string) => void;
+  onCompletePressed: (id: string) => void;
+};
+
+const ItemList: React.FC<ItemListProps> = (props: ItemListProps): JSX.Element => (
+  <>
+    <h3>{props.label}</h3>
+    {props.todos.map((todo: Todo, i: number) => (
+      <TodoItem
+        key={i}
+        todo={todo}
+        onRemovePressed={props.onRemovePressed}
+        onCompletePressed={props.onCompletePressed}
+      />
+    ))}
+  </>
+);
+
 type Props = {
   completedTodos: Array<Todo>;
   incompleteTodos: Array<Todo>;
+  isLoading: boolean;
   onRemovePressed: (id: string) => void;
   onCompletePressed: (id: string) => void;
-  isLoading: boolean;
   startLoadingTodos: () => void;
 };
 
@@ -50,24 +71,18 @@ const TodoList: React.FC<Props> = (props: Props): JSX.Element => {
   const todoListContent = (
     <>
       <TodoForm todos={props.incompleteTodos} />
-      <h3>To be completed</h3>
-      {props.incompleteTodos.map((todo: Todo, i: number) => (
-        <TodoItem
-          key={i}
-          todo={todo}
-          onRemovePressed={props.onRemovePressed}
-          onCompletePressed={props.onCompletePressed}
-        />
-      ))}
-      <h3>Completed</h3>
-      {props.completedTodos.map((todo: Todo, i: number) => (
-        <TodoItem
-          key={i}
-          todo={todo}
-          onRemovePressed={props.onRemovePressed}
-          onCompletePressed={props.onCompletePressed}
-        />
-      ))}
+      <ItemList
+        todos={props.incompleteTodos}
+        label={'To be completed'}
+        onRemovePressed={props.onRemovePressed}
+        onCompletePressed={props.onCompletePressed}
+      />
+      <ItemList
+        todos={props.completedTodos}
+        label={'Completed'}
+        onRemovePressed={props.onRemovePressed}
+        onCompletePressed={props.onCompletePressed}
+      />
     </>
   );
 
@@ -88,6 +103,7 @@ const mapState = (state: TodoState) => ({
   incompleteTodos: getIncompleteTodos(state)
 });
 
+// FIXME typing dispatch
 const mapDispatch = (dispatch: any) => ({
   startLoadingTodos: () => dispatch(loadTodos()),
   onRemovePressed: (id: string) => dispatch(removeTodoRequest(id)),

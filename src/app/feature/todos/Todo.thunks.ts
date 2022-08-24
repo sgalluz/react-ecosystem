@@ -33,6 +33,7 @@ export const addTodoRequest = (text: string) => async (dispatch: any) => {
     });
     const addedTodo: Todo = await response.json();
     dispatch(createTodo(addedTodo));
+    toast.success('New todo created!');
   } catch (error) {
     toast.error('Unable to create new todo');
   }
@@ -45,6 +46,7 @@ export const removeTodoRequest = (id: string) => async (dispatch: any) => {
     });
     const removedTodo: Todo = await response.json();
     dispatch(removeTodo(removedTodo));
+    toast.success('Todo removed!');
   } catch (error) {
     toast.error('Unable to remove todo');
   }
@@ -57,6 +59,7 @@ export const markTodoAsCompleteRequest = (id: string) => async (dispatch: any) =
     });
     const updatedTodo: Todo = await response.json();
     dispatch(markAsCompleted(updatedTodo));
+    toast.success('Todo completed!');
   } catch (error) {
     toast.error('Unable to remove todo');
   }

@@ -40,13 +40,11 @@ const TodoForm: React.FC<Props> = (props: Props): JSX.Element => {
   const toggleCreate = () => {
     const isDuplicateText = props.todos.some((curr: Todo) => curr.text === text);
     if (isDuplicateText) {
-      toast.warning('To-Do with same content already exists!');
-      return;
+      toast.warning('Todo with same content already exists!');
+    } else {
+      dispatch(addTodoRequest(text));
+      setText('');
     }
-
-    dispatch(addTodoRequest(text));
-    toast.success('New To-Do created!');
-    setText('');
   };
 
   return (

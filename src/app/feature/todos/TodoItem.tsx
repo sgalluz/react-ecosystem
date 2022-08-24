@@ -1,5 +1,4 @@
 import React, { createRef, RefObject } from 'react';
-import { toast } from 'react-toastify';
 import { Todo } from './Todo.model';
 import { FaCheck, FaRegCheckCircle, FaRegCircle, FaTimes } from 'react-icons/fa';
 import { SuccessButton, ErrorButton } from '../../components/Buttons';
@@ -71,12 +70,10 @@ const TodoItem: React.FC<Props> = (props: Props): JSX.Element => {
       props.onRemovePressed(todo.id);
       itemRef.current?.classList.remove('removing');
     }, 500);
-    toast.success('Todo removed!');
   };
 
   const markTodoAsCompleted = () => {
     props.onCompletePressed(todo.id);
-    toast.success('Todo completed!');
   };
 
   return (
