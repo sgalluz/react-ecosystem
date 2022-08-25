@@ -18,13 +18,13 @@ describe('HttpClient', () => {
     });
 
     it('should throw an error', () => {
-        const test = { test: 'test' };
-        global.fetch = jest.fn(fetchError) as jest.Mock;
-    
-        const error = subject.get('/test');
+      const test = { test: 'test' };
+      global.fetch = jest.fn(fetchError) as jest.Mock;
 
-        expect(error).rejects.toThrow();
-      });
+      const error = subject.get('/test');
+
+      expect(error).rejects.toThrow();
+    });
   });
 
   describe('when perform a POST request', () => {
@@ -32,19 +32,19 @@ describe('HttpClient', () => {
       const test = { test: 'test' };
       global.fetch = jest.fn(() => fetchSuccess(test)) as jest.Mock;
 
-      const actual = await subject.post('/test', { foo: 'bar'});
+      const actual = await subject.post('/test', { foo: 'bar' });
 
       expect(actual).toEqual(test);
     });
 
     it('should throw an error', () => {
-        const test = { test: 'test' };
-        global.fetch = jest.fn(fetchError) as jest.Mock;
-    
-        const error = subject.post('/test', { foo: 'bar'});
+      const test = { test: 'test' };
+      global.fetch = jest.fn(fetchError) as jest.Mock;
 
-        expect(error).rejects.toThrow();
-      });
+      const error = subject.post('/test', { foo: 'bar' });
+
+      expect(error).rejects.toThrow();
+    });
   });
 
   describe('when perform a POST request', () => {
@@ -52,19 +52,19 @@ describe('HttpClient', () => {
       const test = { test: 'test' };
       global.fetch = jest.fn(() => fetchSuccess(test)) as jest.Mock;
 
-      const actual = await subject.post('/test', { foo: 'bar'});
+      const actual = await subject.post('/test', { foo: 'bar' });
 
       expect(actual).toEqual(test);
     });
 
     it('should throw an error', () => {
-        const test = { test: 'test' };
-        global.fetch = jest.fn(fetchError) as jest.Mock;
-    
-        const error = subject.post('/test', { foo: 'bar'});
+      const test = { test: 'test' };
+      global.fetch = jest.fn(fetchError) as jest.Mock;
 
-        expect(error).rejects.toThrow();
-      });
+      const error = subject.post('/test', { foo: 'bar' });
+
+      expect(error).rejects.toThrow();
+    });
   });
 
   describe('when perform a PUT request', () => {
@@ -72,19 +72,19 @@ describe('HttpClient', () => {
       const test = { test: 'test' };
       global.fetch = jest.fn(() => fetchSuccess(test)) as jest.Mock;
 
-      const actual = await subject.patch('/PUT', { foo: 'bar'});
+      const actual = await subject.patch('/PUT', { foo: 'bar' });
 
       expect(actual).toEqual(test);
     });
 
     it('should throw an error', () => {
-        const test = { test: 'test' };
-        global.fetch = jest.fn(fetchError) as jest.Mock;
-    
-        const error = subject.put('/test', { foo: 'bar'});
+      const test = { test: 'test' };
+      global.fetch = jest.fn(fetchError) as jest.Mock;
 
-        expect(error).rejects.toThrow();
-      });
+      const error = subject.put('/test', { foo: 'bar' });
+
+      expect(error).rejects.toThrow();
+    });
   });
 
   describe('when perform a PATCH request', () => {
@@ -92,19 +92,19 @@ describe('HttpClient', () => {
       const test = { test: 'test' };
       global.fetch = jest.fn(() => fetchSuccess(test)) as jest.Mock;
 
-      const actual = await subject.patch('/test', { foo: 'bar'});
+      const actual = await subject.patch('/test', { foo: 'bar' });
 
       expect(actual).toEqual(test);
     });
 
     it('should throw an error', () => {
-        const test = { test: 'test' };
-        global.fetch = jest.fn(fetchError) as jest.Mock;
-    
-        const error = subject.patch('/test', { foo: 'bar'});
+      const test = { test: 'test' };
+      global.fetch = jest.fn(fetchError) as jest.Mock;
 
-        expect(error).rejects.toThrow();
-      });
+      const error = subject.patch('/test', { foo: 'bar' });
+
+      expect(error).rejects.toThrow();
+    });
   });
 
   describe('when perform a DELETE request', () => {
@@ -118,13 +118,13 @@ describe('HttpClient', () => {
     });
 
     it('should throw an error', () => {
-        const test = { test: 'test' };
-        global.fetch = jest.fn(fetchError) as jest.Mock;
-    
-        const error = subject.delete('/test/123');
+      const test = { test: 'test' };
+      global.fetch = jest.fn(fetchError) as jest.Mock;
 
-        expect(error).rejects.toThrow();
-      });
+      const error = subject.delete('/test/123');
+
+      expect(error).rejects.toThrow();
+    });
   });
 
   const fetchSuccess = (data: any) => Promise.resolve({ json: () => Promise.resolve(data) });
