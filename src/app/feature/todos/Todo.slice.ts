@@ -1,5 +1,13 @@
-import { createSlice, PayloadAction, ValidateSliceCaseReducers } from '@reduxjs/toolkit';
+import { createSlice, ValidateSliceCaseReducers } from '@reduxjs/toolkit';
 import { Todo } from './Todo.model';
+import {
+  createTodo,
+  loadTodosFailure,
+  loadTodosInProgress,
+  loadTodosSuccess,
+  markAsCompleted,
+  removeTodo
+} from './Todo.reducers';
 
 export type TodoState = {
   items: Array<Todo>;
@@ -9,27 +17,12 @@ export type TodoState = {
 const initialState: TodoState = { items: [], isLoading: false };
 
 const reducers: ValidateSliceCaseReducers<TodoState, any> = {
-  createTodo: (state: TodoState, action: PayloadAction<Todo>) => {
-    const { payload } = action;
-    return { ...state, items: state.items.concat(payload) };
-  },
-  removeTodo: (state: TodoState, action: PayloadAction<Todo>) => {
-    const { payload } = action;
-    return { ...state, items: state.items.filter((todo: Todo) => todo.id != payload.id) };
-  },
-  markAsCompleted: (state: TodoState, action: PayloadAction<Todo>) => {
-    const { payload } = action;
-    return {
-      ...state,
-      items: state.items.map((todo: Todo) => (todo.id === payload.id ? payload : todo))
-    };
-  },
-  loadTodosInProgress: (state: TodoState) => ({ ...state, isLoading: true }),
-  loadTodosSuccess: (_: TodoState, action: PayloadAction<Todo[]>) => {
-    const { payload } = action;
-    return { items: payload, isLoading: false };
-  },
-  loadTodosFailure: (state: TodoState) => ({ ...state, isLoading: false })
+  createTodo,
+  removeTodo,
+  markAsCompleted,
+  loadTodosInProgress,
+  loadTodosSuccess,
+  loadTodosFailure
 };
 
 const slice = createSlice({

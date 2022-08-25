@@ -1,6 +1,7 @@
 enum HttpMethod {
   GET = 'GET',
   POST = 'POST',
+  PUT = 'PUT',
   PATCH = 'PATCH',
   DELETE = 'DELETE'
 }
@@ -20,6 +21,10 @@ export class HttpClient {
     return this.fetchData<T>(url, HttpMethod.POST, headers, body);
   }
 
+  put<T>(url: string, body?: any, headers?: HeadersInit): Promise<T> {
+    return this.fetchData<T>(url, HttpMethod.PATCH, headers, body);
+  }
+
   patch<T>(url: string, body?: any, headers?: HeadersInit): Promise<T> {
     return this.fetchData<T>(url, HttpMethod.PATCH, headers, body);
   }
@@ -35,10 +40,10 @@ export class HttpClient {
     requestBody?: any
   ): Promise<T> {
     const body = requestBody ? JSON.stringify(requestBody) : undefined;
-    return fetch(url, {
-      headers,
-      method,
-      body
-    }).then((response) => response.json());
+    return fetch(url, { headers, method, body })
+      .then((response) => response.json())
+      .catch((error) => {
+        throw error;
+      });
   }
 }
